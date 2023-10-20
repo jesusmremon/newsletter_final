@@ -259,10 +259,10 @@ with col2.form('query'):
     query = st.text_input('Introduce the topic to search:', value = query)
     
     if advanced:
-        education = col2.selectbox('Target educational level',('Middle School', 'High School', 'College','Phd'))
-        tone = col2.selectbox('Tone',('Friendly', 'Professional', 'Anchor Broadcaster','1941 German Military Instructor with anger management issues', 'Lawyer'))
+        education = st.selectbox('Target educational level',('Middle School', 'High School', 'College','Phd'))
+        tone = st.selectbox('Tone',('Friendly', 'Professional', 'Anchor Broadcaster','1941 German Military Instructor with anger management issues', 'Lawyer'))
 
-    submitted = col2.form_submit_button("Submit")
+    submitted = st.form_submit_button("Submit")
     if submitted:
         flow_control = True
         st.toast('Generation Started')
