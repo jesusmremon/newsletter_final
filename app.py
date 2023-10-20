@@ -175,8 +175,8 @@ agent = initialize_agent(
     memory=memory
 )
 
-def rewritting(content, tone, educational_level):
-    llm = OpenAI(model_name="gpt-3.5-turbo-16k-0613", temperature=0.7)
+def rewritting(content, tone, educational_level, open_key):
+    llm = OpenAI(model_name="gpt-3.5-turbo-16k-0613", temperature=0.7, openai_api_key=open_key)
     template = """Based on the content provided below, you have to rewrite keep the structure intact, and only change the words. You have to rewrite it like the writer has a {tone} tone, for people with an educational level of {educational_level}
     "{content}"
     Rewriting:
@@ -191,8 +191,8 @@ def rewritting(content, tone, educational_level):
     return summary
 
 
-def content_news(content):
-    llm = OpenAI(model_name="gpt-3.5-turbo-16k-0613", temperature=0.7)
+def content_news(content, open_key):
+    llm = OpenAI(model_name="gpt-3.5-turbo-16k-0613", temperature=0.7, openai_api_key=open_key)
     template = """You are the best writer and journalist, the content below is a newsletter post, and based on that you have to create in a paragraph the description of the collection that this newsletter and others are part of, so if someone wanted to subscribe to all the newsletter of this collection, they will know what is about.
     "{content}"
     Description:
@@ -283,7 +283,7 @@ if flow_control:
     col2.write("***")
 
     with st.spinner("Rewriting for the tone"):
-        result = rewritting(result['output'], tone, education)
+        result = rewritting(result['output'], tone, education, open_key)
 
     col2.header("Tone and demographic adaptation")
     col2.info(result)
@@ -291,7 +291,7 @@ if flow_control:
     col2.write("***")
     
     with st.spinner("Rewriting for the tone"):
-        result = content_news(result['output'])
+        result = content_news(result['output'], open_key)
 
     col2.header("Newsletter Description")
     col2.info(result)
