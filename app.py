@@ -21,7 +21,7 @@ import datetime
 from datetime import date
 
 
-st.set_page_config(page_title='Hypegenius',page_icon=':shark:', layout="wide"))
+st.set_page_config(page_title='Hypegenius',page_icon=':shark:', layout="wide")
 
 serper_key = st.secrets['serper_key']
 open_key = st.secrets['open_key']
