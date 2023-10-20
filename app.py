@@ -21,7 +21,9 @@ import datetime
 from datetime import date
 
 
-st.set_page_config(page_title='Hypegenius',page_icon=':shark:', layout="wide")
+st.set_page_config(page_title='Hypegenius',page_icon=':shark:', layout='wide')
+
+col1, col2, col3 = st.columns([1, 3, 1])
 
 serper_key = st.secrets['serper_key']
 open_key = st.secrets['open_key']
@@ -243,9 +245,7 @@ st.markdown(hide_menu, unsafe_allow_html=True)
 st.title('Hypegenius')
 st.write('###')
 
-age_group = (15, 70)
-location = 'us'
-gender = 'Both'
+education = 'High School'
 tone = 'Friendly'
 
 query = "How to do mindfulness"
@@ -255,14 +255,14 @@ with st.sidebar:
     advanced = st.toggle('Advance Parameters Selection')
 
 
-with st.form('query'):
+with col2.form('query'):
     query = st.text_input('Introduce the topic to search:', value = query)
     
     if advanced:
-        education = st.selectbox('Target educational level',('Middle School', 'High School', 'College','Phd'))
-        tone = st.selectbox('Tone',('Friendly', 'Professional', 'Anchor Broadcaster','1941 German Military Instructor with anger management issues', 'Lawyer'))
+        education = col2.selectbox('Target educational level',('Middle School', 'High School', 'College','Phd'))
+        tone = col2.selectbox('Tone',('Friendly', 'Professional', 'Anchor Broadcaster','1941 German Military Instructor with anger management issues', 'Lawyer'))
 
-    submitted = st.form_submit_button("Submit")
+    submitted = col2.form_submit_button("Submit")
     if submitted:
         flow_control = True
         st.toast('Generation Started')
@@ -278,24 +278,24 @@ if flow_control:
         result = agent({"input": query})
 
     
-    st.header("Newsletter Output")
-    st.info(result['output'])
+    col2.header("Newsletter Output")
+    col2.info(result['output'])
 
-    st.write("***")
+    col2.write("***")
 
     with st.spinner("Rewriting for the tone"):
         result = rewritting(result['output'], tone, education)
 
-    st.header("Tone and demographic adaptation")
-    st.info(result)
+    col2.header("Tone and demographic adaptation")
+    col2.info(result)
 
-    st.write("***")
+    col2.write("***")
     
     with st.spinner("Rewriting for the tone"):
         result = content_news(result['output'])
 
-    st.header("Newsletter Description")
-    st.info(result)
+    col2.header("Newsletter Description")
+    col2.info(result)
 
     end = time.time()
 
