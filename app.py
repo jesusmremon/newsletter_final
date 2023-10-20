@@ -242,8 +242,8 @@ st.markdown(hide_menu, unsafe_allow_html=True)
 # st.sidebar.markdown('<p class="font">Hypegenius</p>', unsafe_allow_html=True)
 
 
-st.title('Hypegenius')
-st.write('###')
+col2.title('Hypegenius')
+col2.write('###')
 
 education = 'High School'
 tone = 'Friendly'
