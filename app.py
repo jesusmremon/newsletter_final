@@ -275,7 +275,7 @@ if flow_control:
 
     
 
-    with col2.spinner("Generating Content"):
+    with st.spinner("Generating Content"):
         result = agent({"input": query})
 
     
@@ -284,7 +284,7 @@ if flow_control:
 
     col2.write("***")
 
-    with col2.spinner("Rewriting for the tone"):
+    with st.spinner("Rewriting for the tone"):
         result = rewritting(result['output'], tone, education)
 
     col2.header("Tone and demographic adaptation")
@@ -292,7 +292,7 @@ if flow_control:
 
     col2.write("***")
     
-    with col2.spinner("Rewriting for the tone"):
+    with st.spinner("Rewriting for the tone"):
         result = content_news(result['output'])
 
     col2.header("Newsletter Description")
