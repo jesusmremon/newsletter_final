@@ -275,14 +275,14 @@ if flow_control:
 
     
 
-    with st.spinner("Generating Content"):
+    with st.spinner("I'm generating the Content"):
         result = agent({"input": query})
 
     col2.info(result['output'])
 
     col2.write("***")
 
-    with st.spinner("Rewriting for the tone"):
+    with st.spinner("Let me rewrite for the tone"):
         result = rewritting(result['output'], tone, education, open_key)
 
     col2.header("Tone and demographic adaptation")
@@ -290,7 +290,7 @@ if flow_control:
 
     col2.write("***")
     
-    with st.spinner("Generating the concept"):
+    with st.spinner("I'm generating the concept"):
         result = content_news(result, open_key)
 
     col2.header("Newsletter Description")
