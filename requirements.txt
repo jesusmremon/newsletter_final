@@ -1,0 +1,7 @@
+openai 
+requests 
+langchain 
+html2text 
+tiktoken
+bs4
+typing
