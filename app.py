@@ -13,6 +13,7 @@ from langchain.chains.summarize import load_summarize_chain
 from langchain.tools import BaseTool
 from langchain.schema import SystemMessage
 from pydantic import BaseModel, Field
+from langchain import OpenAI, LLMChain, PromptTemplate
 
 import streamlit as st
 from langchain.callbacks import get_openai_callback
@@ -274,7 +275,7 @@ if flow_control:
 
     
 
-    with st.spinner("Generating Content"):
+    with col2.spinner("Generating Content"):
         result = agent({"input": query})
 
     
@@ -283,7 +284,7 @@ if flow_control:
 
     col2.write("***")
 
-    with st.spinner("Rewriting for the tone"):
+    with col2.spinner("Rewriting for the tone"):
         result = rewritting(result['output'], tone, education)
 
     col2.header("Tone and demographic adaptation")
@@ -291,7 +292,7 @@ if flow_control:
 
     col2.write("***")
     
-    with st.spinner("Rewriting for the tone"):
+    with col2.spinner("Rewriting for the tone"):
         result = content_news(result['output'])
 
     col2.header("Newsletter Description")
