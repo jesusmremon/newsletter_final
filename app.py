@@ -193,7 +193,7 @@ def rewritting(content, tone, educational_level, open_key):
 
 def content_news(content, open_key):
     llm = OpenAI(model_name="gpt-3.5-turbo-16k-0613", temperature=0.7, openai_api_key=open_key)
-    template = """You are the best writer and journalist, the content below is a newsletter post, and based on that you have to create in a paragraph the description of the collection that this newsletter and others are part of, so if someone wanted to subscribe to all the newsletter of this collection, they will know what is about.
+    template = """You are the best writer and journalist, the content below is a newsletter post, and based on that you have to create in a paragraph the description of the collection that this newsletter and others are part of, so if someone wanted to subscribe to all the newsletter of this collection, they will know what is about, be as generic as possible without missing any key information.
     "{content}"
     Description:
     """
@@ -290,7 +290,7 @@ if flow_control:
 
     col2.write("***")
     
-    with st.spinner("Rewriting for the tone"):
+    with st.spinner("Generating the concept"):
         result = content_news(result, open_key)
 
     col2.header("Newsletter Description")
