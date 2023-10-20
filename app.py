@@ -261,7 +261,7 @@ with col2.form('query'):
     
     if advanced:
         education = st.selectbox('Target educational level',('Middle School', 'High School', 'College','Phd'))
-        tone = st.selectbox('Tone',('Friendly', 'Professional', 'Anchor Broadcaster','1941 German Military Instructor with anger management issues', 'Lawyer'))
+        tone = st.selectbox('Tone',('Friendly', 'Professional', 'Anchor Broadcaster','Serius', 'Lawyer'))
 
     submitted = st.form_submit_button("Submit")
     if submitted:
