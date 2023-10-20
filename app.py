@@ -23,6 +23,10 @@ from datetime import date
 
 st.set_page_config(page_title='Hypegenius',page_icon=':brain:')
 
+serper_key = st.secrets['serper_key']
+open_key = st.secrets['open_key']
+browserless_key = st.secrets['browserless_key']
+
 
 ## Functions Definition
 def search(query):
@@ -167,10 +171,6 @@ agent = initialize_agent(
     agent_kwargs=agent_kwargs,
     memory=memory
 )
-
-serper_key = st.secrets['serper_key']
-open_key = st.secrets['open_key']
-browserless_key = st.secrets['browserless_key']
 
 openai.api_key = open_key
 
