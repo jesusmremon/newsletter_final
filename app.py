@@ -291,7 +291,7 @@ if flow_control:
     col2.write("***")
     
     with st.spinner("Rewriting for the tone"):
-        result = content_news(result['output'], open_key)
+        result = content_news(result, open_key)
 
     col2.header("Newsletter Description")
     col2.info(result)
