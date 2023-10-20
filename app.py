@@ -21,7 +21,7 @@ import datetime
 from datetime import date
 
 
-st.set_page_config(page_title='Hypegenius',page_icon=':shark:')
+st.set_page_config(page_title='Hypegenius',page_icon=':shark:', layout="wide"))
 
 serper_key = st.secrets['serper_key']
 open_key = st.secrets['open_key']
@@ -172,6 +172,37 @@ agent = initialize_agent(
     memory=memory
 )
 
+def rewritting(content, tone, educational_level):
+    llm = OpenAI(model_name="gpt-3.5-turbo-16k-0613", temperature=0.7)
+    template = """Based on the content provided below, you have to rewrite keep the structure intact, and only change the words. You have to rewrite it like the writer has a {tone} tone, for people with an educational level of {educational_level}
+    "{content}"
+    Rewriting:
+    """
+
+    prompt_template = PromptTemplate(input_variables=["tone","educational_level", "content"], template=template)
+
+    summarizer_chain = LLMChain(llm = llm, prompt = prompt_template, verbose=False)
+
+    summary = summarizer_chain.predict(tone = tone, educational_level = educational_level, content = content)
+
+    return summary
+
+
+def content_news(content):
+    llm = OpenAI(model_name="gpt-3.5-turbo-16k-0613", temperature=0.7)
+    template = """You are the best writer and journalist, the content below is a newsletter post, and based on that you have to create in a paragraph the description of the collection that this newsletter and others are part of, so if someone wanted to subscribe to all the newsletter of this collection, they will know what is about.
+    "{content}"
+    Description:
+    """
+
+    prompt_template = PromptTemplate(input_variables=["content"], template=template)
+
+    summarizer_chain = LLMChain(llm = llm, prompt = prompt_template, verbose=False)
+
+    summary = summarizer_chain.predict(content = content)
+
+    return summary
+
 openai.api_key = open_key
 
 flow_control = False
@@ -228,8 +259,6 @@ with st.form('query'):
     query = st.text_input('Introduce the topic to search:', value = query)
     
     if advanced:
-        age_group = st.slider('Select the age range', 15, 100, (18, 25))
-        location = st.selectbox('Audience Country',('🇨🇦', '🇪🇸', '🇺🇸'))
         education = st.selectbox('Target educational level',('Middle School', 'High School', 'College','Phd'))
         tone = st.selectbox('Tone',('Friendly', 'Professional', 'Anchor Broadcaster','1941 German Military Instructor with anger management issues', 'Lawyer'))
 
@@ -241,25 +270,32 @@ with st.form('query'):
 
 if flow_control:
 
-    if location == '🇨🇦':
-        location = 'Canada'
-        search_location = 'ca'
-        
-    elif location == '🇪🇸':
-        location = 'Spain'
-        search_location = 'es'
-
-    elif location == '🇺🇸':
-        location = 'United States'
-        search_location = 'us'
-
-   
-
     start = time.time()
-    
-    result = agent({"input": query})
 
+    
+
+    with st.spinner("Generating Content"):
+        result = agent({"input": query})
+
+    
+    st.header("Newsletter Output")
     st.info(result['output'])
+
+    st.write("***")
+
+    with st.spinner("Rewriting for the tone"):
+        result = rewritting(result['output'], tone, education)
+
+    st.header("Tone and demographic adaptation")
+    st.info(result)
+
+    st.write("***")
+    
+    with st.spinner("Rewriting for the tone"):
+        result = content_news(result['output'])
+
+    st.header("Newsletter Description")
+    st.info(result)
 
     end = time.time()
 
