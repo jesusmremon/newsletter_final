@@ -5,3 +5,4 @@ html2text
 tiktoken
 bs4
 typing
+streamlit
