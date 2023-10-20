@@ -278,9 +278,9 @@ if flow_control:
     with st.spinner("Generating Content"):
         result = agent({"input": query})
 
-    
-    col2.header("Newsletter Output")
-    col2.info(result['output'])
+    with col2.expander("Newsletter Output"):
+        # col2.header("Newsletter Output")
+        st.info(result['output'])
 
     col2.write("***")
 
