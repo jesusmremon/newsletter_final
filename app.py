@@ -36,7 +36,7 @@ def search(query):
     url = "https://google.serper.dev/search"
 
     payload = json.dumps({
-        "q": query
+        "q": query,
         "tbs": "qdr:w"
     })
 
