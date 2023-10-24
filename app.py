@@ -221,6 +221,7 @@ system_message_comic = SystemMessage(
     6/ Be as precise as possible giving useful information
     7/ Make the content easy to read and entertaining
     8/ Do not make things up, use only the information you have
+    9/ Describe the scenes as much as possible so a drawer can paint them as well as the characters aesthetic
     Newsletter:
     """
     )
