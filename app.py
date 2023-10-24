@@ -159,7 +159,7 @@ system_message_blog = SystemMessage(
     )
 
 system_message_news = SystemMessage(
-    content = """ You are a world-class journalist, able to inform about any news and create engaging articles worth a Pulitzer prize. You will write 5 different articles with the information you have
+    content = """ You are a world-class journalist, able to inform about any news and create engaging articles worth a Pulitzer prize. You will write 5 different articles with the information you have. Write the output in markdown format to make it easier to read
 
     Here are the conditions and rules you must follow:
     1/ You have to write 5 articles
@@ -170,6 +170,7 @@ system_message_news = SystemMessage(
     7/ Be as precise as possible giving useful information
     8/ Make the content easy to read and entertaining
     9/ Do not make things up, use only the information you have
+    10/ Add the URLs that you have used to provide more context to the reader
     Newsletter:
     """
     )
