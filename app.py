@@ -37,6 +37,7 @@ def search(query):
 
     payload = json.dumps({
         "q": query
+        "tbs": "qdr:w"
     })
 
     headers = {
@@ -55,7 +56,7 @@ def scrape_website(objective: str, url: str):
     # scrape website, and also will summarize the content based on objective if the content is too large
     # objective is the original objective & task that user give to the agent, url is the url of the website to be scraped
 
-    print("Scraping website...")
+    # print("Scraping website...")
     # Define the headers for the request
     headers = {
         'Cache-Control': 'no-cache',
@@ -78,7 +79,7 @@ def scrape_website(objective: str, url: str):
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, "html.parser")
         text = soup.get_text()
-        print("CONTENTTTTTT:", text)
+        # print("CONTENTTTTTT:", text)
 
         if len(text) > 10000:
             output = summary(objective, text)
@@ -118,7 +119,7 @@ def summary(objective, content):
 class ScrapeWebsiteInput(BaseModel):
     """Inputs for scrape_website"""
     objective: str = Field(
-        description="The objective & task that users give to the agent")
+        description="Your objective is to get the highest quality data to create a newsletter")
     url: str = Field(description="The url of the website to be scraped")
 
 class ScrapeWebsiteTool(BaseTool):
@@ -136,12 +137,12 @@ tools = [
     Tool(
         name="Search",
         func=search,
-        description="useful for when you need to answer questions about current events, data. You should ask targeted questions"
+        description="useful for when you need to answer questions about current events, or data. You should ask targeted questions"
     ),
     ScrapeWebsiteTool(),
 ]
 
-system_message = SystemMessage(
+system_message_blog = SystemMessage(
     content = """You are a Newsletter Witter, The user will give you some information, about the topic, you should use that and change the user input where it corresponds below, with that, you will write a newsletter using the structure you have at the bottom. Your output should be 700 words long and in markdown format.\n\nThe structure must be the next one, replace my <> with the content it says\n\n<Title>\n\n<Introduction title>\n<Introduction content>\n\n<Main Body title>\n<Main Body content>\n\n<Conclusion Title>\n<Conclusion content>
 
     Here are the conditions and rules you must follow:
@@ -157,23 +158,23 @@ system_message = SystemMessage(
     """
     )
 
-agent_kwargs = {
-    "extra_prompt_messages": [MessagesPlaceholder(variable_name="memory")],
-    "system_message": system_message,
-}
+system_message_news = SystemMessage(
+    content = """ You are a world-class journalist, able to inform about any news and create engaging articles worth a Pulitzer prize. You will write 5 different articles with the information you have
 
-llm = ChatOpenAI(temperature=0.7, model="gpt-3.5-turbo-16k-0613", openai_api_key=open_key)
-memory = ConversationSummaryBufferMemory(
-    memory_key="memory", return_messages=True, llm=llm, max_token_limit=1000)
+    Here are the conditions and rules you must follow:
+    1/ You have to write 5 articles
+    2/ The articles must be different, do not repeat the same article twice
+    3/ The articles must be engaging and easy to read
+    5/ Each article should have a catchy title and content with 200 words
+    6/ The articles need to give the audience insights
+    7/ Be as precise as possible giving useful information
+    8/ Make the content easy to read and entertaining
+    9/ Do not make things up, use only the information you have
+    Newsletter:
+    """
+    )
 
-agent = initialize_agent(
-    tools,
-    llm,
-    agent = AgentType.OPENAI_FUNCTIONS,
-    verbose = False,
-    agent_kwargs=agent_kwargs,
-    memory=memory
-)
+
 
 def rewritting(content, tone, educational_level, open_key):
     llm = OpenAI(model_name="gpt-3.5-turbo-16k-0613", temperature=0.7, openai_api_key=open_key)
@@ -262,6 +263,7 @@ with col2.form('query'):
     if advanced:
         education = st.selectbox('Target educational level',('Middle School', 'High School', 'College','Phd'))
         tone = st.selectbox('Tone',('Friendly', 'Professional', 'Anchor Broadcaster','Serius', 'Lawyer'))
+        type = st.selectbox('Type of Newsletters',('Blog Style', 'News Style'))
 
     submitted = st.form_submit_button("Submit")
     if submitted:
@@ -271,10 +273,32 @@ with col2.form('query'):
 
 if flow_control:
 
+    if type == 'News Style':
+        system_message = system_message_news
+    else:
+        system_message = system_message_blog
+
     start = time.time()
 
+    agent_kwargs = {
+    "extra_prompt_messages": [MessagesPlaceholder(variable_name="memory")],
+    "system_message": system_message,
+    }
     
+    llm = ChatOpenAI(temperature=0.7, model="gpt-3.5-turbo-16k-0613", openai_api_key=open_key)
+    memory = ConversationSummaryBufferMemory(
+        memory_key="memory", return_messages=True, llm=llm, max_token_limit=1000)
+    
+    agent = initialize_agent(
+        tools,
+        llm,
+        agent = AgentType.OPENAI_FUNCTIONS,
+        verbose = False,
+        agent_kwargs=agent_kwargs,
+        memory=memory
+    )
 
+    
     with st.spinner("I'm generating the Content"):
         result = agent({"input": query})
 
