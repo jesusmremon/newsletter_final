@@ -175,6 +175,57 @@ system_message_news = SystemMessage(
     """
     )
 
+system_message_novel = SystemMessage(
+    content = """ You are a world-class writter, able to write and create books based in any content. You will write a novel with the information you have. Write the output in markdown format to make it easier to read
+
+    Here are the conditions and rules you must follow:
+    1/ You have to write a novel based on the topic
+    2/ The novel must be genuine and entertaining to read
+    3/ The novel must be engaging and easy to read
+    4/ The novel should have a catchy title and content with 700 words, you can create as many chapters as you want
+    5/ The novel needs to give the audience insights
+    6/ Be as precise as possible giving useful information
+    7/ Make the content easy to read and entertaining
+    8/ Do not make things up, use only the information you have
+    Newsletter:
+    """
+    )
+
+
+system_message_guide = SystemMessage(
+    content = """ You are a world-class writter, able to write and create guides based in any content. You will write a guide with the information you have. Write the output in markdown format to make it easier to read
+
+    Here are the conditions and rules you must follow:
+    1/ You have to write a guide based on the topic
+    2/ The guide must be genuine and entertaining to read
+    3/ The guide must be engaging and easy to read
+    4/ The guide should have a catchy title, content with 700 words explaining everything and giving all the context, and a bullet point to summarize.
+    5/ The guide needs to give the audience insights
+    6/ Be as precise as possible giving useful information
+    7/ Make the content easy to read and entertaining
+    8/ Do not make things up, use only the information you have
+    Newsletter:
+    """
+    )
+
+
+system_message_comic = SystemMessage(
+    content = """ You are a world-class comic writter, able to write and create comics based in any content. You will write a comic with the information you have. Write the output in markdown format to make it easier to read
+
+    Here are the conditions and rules you must follow:
+    1/ You have to write the comic dialogs and a sentence describing each scene so we can draw it
+    2/ The comic must be genuine and entertaining to read
+    3/ The comic must be engaging and easy to read
+    4/ The comic should have at least 10 different scenes and various character
+    5/ Create for each scene and character a prompt with enough information to draw it
+    6/ Be as precise as possible giving useful information
+    7/ Make the content easy to read and entertaining
+    8/ Do not make things up, use only the information you have
+    Newsletter:
+    """
+    )
+
+
 
 
 def rewritting(content, tone, educational_level, open_key):
@@ -264,7 +315,7 @@ with col2.form('query'):
     if advanced:
         education = st.selectbox('Target educational level',('Middle School', 'High School', 'College','Phd'))
         tone = st.selectbox('Tone',('Friendly', 'Professional', 'Anchor Broadcaster','Serius', 'Lawyer'))
-        type = st.selectbox('Type of Newsletters',('Blog Style', 'News Style'))
+        type = st.selectbox('Type of Newsletters',('Blog Style', 'News Style', 'Guide Style', 'Novel Style', 'Comic Style (Waiting for Dalle 3 to finish)'))
 
     submitted = st.form_submit_button("Submit")
     if submitted:
@@ -276,6 +327,12 @@ if flow_control:
 
     if type == 'News Style':
         system_message = system_message_news
+    elif type == 'Guide Style':
+        system_message = system_message_guide
+    elif type == 'Novel Style':
+        system_message = system_message_novel
+    elif type == 'Comic Style (Waiting for Dalle 3 to finish)':
+        system_message = system_message_comic
     else:
         system_message = system_message_blog
 
