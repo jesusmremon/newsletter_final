@@ -30,6 +30,8 @@ serper_key = st.secrets['serper_key']
 open_key = st.secrets['open_key']
 browserless_key = st.secrets['browserless_key']
 
+openai.api_key = st.secrets['open_key']
+
 
     
 ## Functions Definition
@@ -231,7 +233,7 @@ system_message_comic = SystemMessage(
 
 
 def rewritting(content, tone, educational_level, open_key):
-    llm = OpenAI(model_name="gpt-4-1106-preview", temperature=0.7, openai_api_key=open_key)
+    llm = OpenAI(model_name="gpt-4-1106-preview", temperature=0.7, openai_api_key=st.secrets['open_key'])
     template = """Based on the content provided below, you have to rewrite keep the structure intact, and only change the words. You have to rewrite it like the writer has a {tone} tone, for people with an educational level of {educational_level}
     "{content}"
     Rewriting:
@@ -247,7 +249,7 @@ def rewritting(content, tone, educational_level, open_key):
 
 
 def content_news(content, open_key):
-    llm = OpenAI(model_name="gpt-4-1106-preview", temperature=0.7, openai_api_key=open_key)
+    llm = OpenAI(model_name="gpt-4-1106-preview", temperature=0.7, openai_api_key=st.secrets['open_key'])
     template = """You are the best writer and journalist, the content below is a newsletter post, and based on that you have to create in a paragraph the description of the collection that this newsletter and others are part of, so if someone wanted to subscribe to all the newsletter of this collection, they will know what is about, be as generic as possible without missing any key information.
     "{content}"
     Description:
@@ -261,7 +263,6 @@ def content_news(content, open_key):
 
     return summary
 
-openai.api_key = open_key
 
 flow_control = False
 
