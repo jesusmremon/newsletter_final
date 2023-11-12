@@ -27,7 +27,7 @@ st.set_page_config(page_title='Hypegenius',page_icon=':shark:', layout='wide')
 col1, col2, col3 = st.columns([1, 3, 1])
 
 serper_key = st.secrets['serper_key']
-open_key = st.text_input("OpenAI Key", type="password")
+open_key = st.secrets['open_key']
 browserless_key = st.secrets['browserless_key']
 
 
