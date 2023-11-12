@@ -336,7 +336,7 @@ if flow_control:
         system_message = system_message_novel
     elif type == 'Comic Style (Waiting for Dalle 3 to finish)':
         system_message = system_message_comic
-    else:
+    elif type == 'Blog Style':
         system_message = system_message_blog
 
     start = time.time()
