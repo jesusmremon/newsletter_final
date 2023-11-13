@@ -235,19 +235,19 @@ system_message_comic = SystemMessage(
 
 
 def rewritting(content, tone, educational_level, open_key):
-    llm = OpenAI(model_name="gpt-4-1106-preview", temperature=0.7, openai_api_key=st.secrets['open_key'])
-    template = """Based on the content provided below, you have to rewrite keep the structure intact, and only change the words. You have to rewrite it like the writer has a {tone} tone, for people with an educational level of {educational_level}
-    "{content}"
-    Rewriting:
-    """
+    template = "Based on the content provided by the user, you have to rewrite keep the structure intact, and only change the words."
+    
+    completion = client.chat.completions.create(
+      model="gpt-4-1106-preview",
+      messages=[
+        {"role": "system", "content": template},
+        {"role": "user", "content": "You have to rewrite the content provided below like the writer has a {tone} tone, for people with an educational level of {educational_level}: CONTENT: {content}".format(tone = tone, educational_level=educational_level, content=content)}
+      ]
+    )
 
-    prompt_template = PromptTemplate(input_variables=["tone","educational_level", "content"], template=template)
+    rewritte = completion.choices[0].message.content
 
-    summarizer_chain = LLMChain(llm = llm, prompt = prompt_template, verbose=False)
-
-    summary = summarizer_chain.predict(tone = tone, educational_level = educational_level, content = content)
-
-    return summary
+    return rewritte
 
 
 def content_news(content, open_key):
