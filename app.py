@@ -33,7 +33,6 @@ browserless_key = st.secrets['browserless_key']
 
 os.environ['OPEN_AI_KEY'] = open_key
 
-os.environ['OPEN_AI_KEY']
 
 
     
