@@ -31,9 +31,9 @@ serper_key = st.secrets['serper_key']
 open_key = st.secrets['open_key']
 browserless_key = st.secrets['browserless_key']
 
-# os.environ['OPEN_AI_KEY'] = open_key
+os.environ['OPEN_AI_KEY'] = open_key
 
-openai.api_key = open_key
+os.environ['OPEN_AI_KEY']
 
 
     
