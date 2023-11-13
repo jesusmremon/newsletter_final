@@ -232,6 +232,7 @@ system_message_comic = SystemMessage(
     """
     )
 
+system_message = system_message_blog
 
 
 
