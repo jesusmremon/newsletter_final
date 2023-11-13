@@ -15,6 +15,7 @@ from langchain.schema import SystemMessage
 from pydantic import BaseModel, Field
 from langchain import OpenAI, LLMChain, PromptTemplate
 import os
+from openai import OpenAI
 
 import streamlit as st
 from langchain.callbacks import get_openai_callback
@@ -34,8 +35,6 @@ browserless_key = st.secrets['browserless_key']
 openai.api_key = open_key
 
 client = OpenAI(api_key=open_key)
-
-
 
     
 ## Functions Definition
