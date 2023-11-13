@@ -6,3 +6,4 @@ tiktoken
 bs4
 typing
 streamlit
+os
