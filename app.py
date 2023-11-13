@@ -291,6 +291,7 @@ col2.write('###')
 
 education = 'High School'
 tone = 'Friendly'
+type == 'Blog Style'
 
 query = "How to do mindfulness"
 
