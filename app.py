@@ -14,6 +14,7 @@ from langchain.tools import BaseTool
 from langchain.schema import SystemMessage
 from pydantic import BaseModel, Field
 from langchain import OpenAI, LLMChain, PromptTemplate
+import os
 
 import streamlit as st
 from langchain.callbacks import get_openai_callback
