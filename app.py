@@ -24,7 +24,7 @@ import datetime
 from datetime import date
 
 
-st.set_page_config(page_title='Hypegenius',page_icon=':shark:', layout='wide')
+st.set_page_config(page_title='Content_creation',page_icon=':shark:', layout='wide')
 
 col1, col2, col3 = st.columns([1, 3, 1])
 
@@ -287,7 +287,7 @@ st.markdown(hide_menu, unsafe_allow_html=True)
 # st.sidebar.markdown('<p class="font">Hypegenius</p>', unsafe_allow_html=True)
 
 
-col2.title('Hypegenius')
+col2.title('Newsletter Generation')
 col2.write('###')
 
 education = 'High School'
